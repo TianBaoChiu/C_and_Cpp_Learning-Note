@@ -16,7 +16,8 @@ int main()
         cout << endl;
     }
 
-    // 二維數組使用for each時，需要用auto來取得data type
+    // 二維數組使用for each時，可用auto來取得data type
+    // 或是int(&x)[3]也可
     for (int(&x)[3] : B)
     {
         for (int &y : x)
