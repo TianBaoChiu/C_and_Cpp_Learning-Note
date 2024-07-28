@@ -25,6 +25,9 @@ public:
     ~LinkedList();
     void create(const vector<int> &A);
     void Display();
+    void Insert(int index, int x);
+    int Delete(int index);
+    int Length();
 };
 
 void LinkedList::create(const vector<int> &A)
@@ -63,6 +66,63 @@ LinkedList::~LinkedList()
     }
 }
 
+int LinkedList::Length()
+{
+    Node *p = first;
+    int count = 0;
+    while (p)
+    {
+        p = p->next;
+        count++;
+    }
+
+    return count;
+}
+
+void LinkedList::Insert(int index, int x)
+{
+    Node *temp_node = new Node(x);
+    Node *p = first;
+
+    if (index < 0 && index > Length())
+        return;
+
+    if (index == 0)
+    {
+        temp_node->next = first;
+        first = temp_node;
+    }
+    else
+    {
+        for (int i = 0; i < index - 1; i++)
+        {
+            p = p->next;
+        }
+        temp_node->next = p->next;
+        p->next = temp_node;
+    }
+}
+
+int LinkedList::Delete(int index)
+{
+    Node *q = nullptr;
+    Node *p = first;
+    int delete_value = 0;
+
+    if (index < 0 && index > Length())
+        return -1;
+    for (int i = 0; i < index - 1; i++)
+    {
+        q = p;
+        p = p->next;
+    }
+    delete_value = p->data;
+    q->next = p->next;
+    delete p;
+
+    return delete_value;
+}
+
 int main(void)
 {
     LinkedList list;
@@ -70,6 +130,11 @@ int main(void)
     list.create(arr);
 
     list.Display();
+    int length = list.Length();
+    cout << "Length is " << length << endl;
 
+    int delete_value = list.Delete(3);
+    cout << "Delete" << delete_value << endl;
+    list.Display();
     return 0;
 }
